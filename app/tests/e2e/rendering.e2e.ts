@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test'
 
+test('runtime health endpoint is dynamic and non-cacheable', async ({ request }) => {
+  const response = await request.get('/healthz')
+
+  expect(response.status()).toBe(200)
+  expect(response.headers()['cache-control']).toContain('no-store')
+  expect(await response.json()).toEqual({ status: 'ok', surface: 'admin' })
+})
+
 test('public route is rendered and indexable', async ({ page }) => {
   const response = await page.goto('/en')
 
