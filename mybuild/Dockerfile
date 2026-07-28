@@ -49,6 +49,7 @@ ARG http_proxy
 ARG https_proxy
 ARG NO_PROXY
 ARG no_proxy
+ARG NODE_USE_ENV_PROXY=1
 
 # 设置代理环境变量（仅在传递了代理参数时生效）
 ENV HTTP_PROXY=${HTTP_PROXY} \
@@ -56,7 +57,8 @@ ENV HTTP_PROXY=${HTTP_PROXY} \
     http_proxy=${http_proxy} \
     https_proxy=${https_proxy} \
     NO_PROXY=${NO_PROXY} \
-    no_proxy=${no_proxy}
+    no_proxy=${no_proxy} \
+    NODE_USE_ENV_PROXY=${NODE_USE_ENV_PROXY}
 
 # NEXT_PUBLIC_* 构建时静态嵌入 bundle，CI 通过 --build-arg 注入
 ARG NEXT_PUBLIC_API_URL=/api
@@ -81,12 +83,11 @@ ENV npm_config_registry=${NPM_CONFIG_REGISTRY} \
     npm_config_fetch_retry_maxtimeout=120000 \
     npm_config_fetch_timeout=600000
 
-# 安装 pnpm，使用 npm 的重试/超时参数避免 corepack 短超时导致构建中断。
-RUN timeout 120 npm install -g pnpm@10.24.0 \
-    --registry="${NPM_CONFIG_REGISTRY}" \
-    --fetch-retries=5 \
-    --fetch-retry-maxtimeout=120000 \
-    --fetch-timeout=120000
+# 固定基础镜像已包含 Corepack。启用 Node 24 原生环境代理后由 Corepack 安装精确 pnpm，
+# 避免额外的 npm 全局安装层及其无法可靠中止的网络挂起。
+RUN corepack enable && \
+    corepack install --global pnpm@10.24.0 && \
+    pnpm --version | grep -qx '10.24.0'
 
 ENV CYPRESS_INSTALL_BINARY=0 \
     ELECTRON_SKIP_BINARY_DOWNLOAD=1 \
@@ -126,23 +127,6 @@ FROM ${NODE_IMAGE} AS run-minimal
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 --ingroup nodejs nextjs
 
-# ============================================================================
-# 代理配置（可选，与 build 阶段相同）
-# ============================================================================
-ARG HTTP_PROXY
-ARG HTTPS_PROXY
-ARG http_proxy
-ARG https_proxy
-ARG NO_PROXY
-ARG no_proxy
-
-# 设置代理环境变量（用于 apk、npm/pnpm 等）
-ENV HTTP_PROXY=${HTTP_PROXY} \
-    HTTPS_PROXY=${HTTPS_PROXY} \
-    http_proxy=${http_proxy} \
-    https_proxy=${https_proxy} \
-    NO_PROXY=${NO_PROXY} \
-    no_proxy=${no_proxy}
 WORKDIR /app
 ENV NODE_ENV=production \
     APP_ENV=production \
