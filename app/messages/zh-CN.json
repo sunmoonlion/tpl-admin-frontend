@@ -25,7 +25,10 @@
   "errors": {
     "notFoundTitle": "页面不存在",
     "notFoundDescription": "请求的页面不存在或已不可用。",
-    "returnHome": "返回首页"
+    "returnHome": "返回首页",
+    "forbiddenTitle": "拒绝访问",
+    "forbiddenDescription": "当前登录角色无权使用此管理能力。",
+    "returnDashboard": "返回治理控制台"
   },
   "auth": {
     "login": "使用 Casdoor 登录",

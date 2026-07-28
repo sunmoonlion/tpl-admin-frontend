@@ -25,7 +25,10 @@
   "errors": {
     "notFoundTitle": "Page not found",
     "notFoundDescription": "The requested page does not exist or is no longer available.",
-    "returnHome": "Return home"
+    "returnHome": "Return home",
+    "forbiddenTitle": "Access denied",
+    "forbiddenDescription": "Your authenticated role does not allow this administration capability.",
+    "returnDashboard": "Return to dashboard"
   },
   "auth": {
     "login": "Sign in with Casdoor",

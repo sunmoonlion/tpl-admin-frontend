@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export default async function ForbiddenPage({
   params,
@@ -6,11 +7,14 @@ export default async function ForbiddenPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('errors')
   return (
     <div className="center-page">
-      <h1>Access denied</h1>
-      <p>Your authenticated role does not allow this administration capability.</p>
-      <Link href={`/${locale}/dashboard`} className="primary-button">Return to dashboard</Link>
+      <h1>{t('forbiddenTitle')}</h1>
+      <p>{t('forbiddenDescription')}</p>
+      <Link href={`/${locale}/dashboard`} className="primary-button">
+        {t('returnDashboard')}
+      </Link>
     </div>
   )
 }

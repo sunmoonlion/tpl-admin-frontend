@@ -5,7 +5,12 @@ test('runtime health endpoint is dynamic and non-cacheable', async ({ request })
 
   expect(response.status()).toBe(200)
   expect(response.headers()['cache-control']).toContain('no-store')
-  expect(await response.json()).toEqual({ status: 'ok', surface: 'admin' })
+  expect(response.headers()['x-deployment-id']).toBe('p0-007e-e1-e2e')
+  expect(await response.json()).toEqual({
+    status: 'ok',
+    surface: 'admin',
+    deployment_id: 'p0-007e-e1-e2e',
+  })
 })
 
 test('public route is rendered and indexable', async ({ page }) => {

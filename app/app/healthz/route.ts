@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { serverEnv } from '@/env/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,10 +8,12 @@ export function GET() {
     {
       status: 'ok',
       surface: 'admin',
+      deployment_id: serverEnv.DEPLOYMENT_ID,
     },
     {
       headers: {
         'Cache-Control': 'no-store',
+        'X-Deployment-ID': serverEnv.DEPLOYMENT_ID,
       },
     },
   )
