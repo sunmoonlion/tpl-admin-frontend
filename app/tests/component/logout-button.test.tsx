@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { LogoutButton } from '@/components/auth/logout-button'
 
@@ -20,13 +21,16 @@ describe('LogoutButton', () => {
     const fetchMock = vi
       .spyOn(globalThis, 'fetch')
       .mockResolvedValue(new Response(null, { status: 204 }))
-    render(
+    const queryClient = new QueryClient()
+    queryClient.setQueryData(['authorized'], { secret: true })
+    renderWithQuery(
       <LogoutButton
         csrfToken="csrf-token-value-that-is-long-enough-1234"
         locale="en"
         label="Logout"
         errorLabel="Logout failed"
       />,
+      queryClient,
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Logout' }))
@@ -41,11 +45,12 @@ describe('LogoutButton', () => {
       },
     })
     expect(refresh).toHaveBeenCalledOnce()
+    expect(queryClient.getQueryData(['authorized'])).toBeUndefined()
   })
 
   it('does not redirect when logout is rejected', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(null, { status: 403 }))
-    render(
+    renderWithQuery(
       <LogoutButton
         csrfToken="csrf-token-value-that-is-long-enough-1234"
         locale="en"
@@ -59,3 +64,7 @@ describe('LogoutButton', () => {
     expect(replace).not.toHaveBeenCalled()
   })
 })
+
+function renderWithQuery(node: React.ReactNode, queryClient = new QueryClient()) {
+  return render(<QueryClientProvider client={queryClient}>{node}</QueryClientProvider>)
+}

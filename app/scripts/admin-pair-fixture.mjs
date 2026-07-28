@@ -23,7 +23,10 @@ const server = createServer((request, response) => {
   }
 
   if (request.method === 'GET' && url.pathname === '/api/auth/me') {
-    const authenticated = request.headers.cookie?.includes(`${cookieName}=e2e-session`) ?? false
+    const cookie = request.headers.cookie ?? ''
+    const authenticated =
+      cookie.includes(`${cookieName}=e2e-session`) ||
+      cookie.includes(`${cookieName}=operator-session`)
     if (!authenticated) {
       sendJson(response, 401, { detail: 'unauthenticated' })
       return
@@ -37,7 +40,7 @@ const server = createServer((request, response) => {
         surface: 'admin',
         display_name: 'Paired E2E User',
         email: 'admin@example.test',
-        roles: ['admin'],
+        roles: cookie.includes(`${cookieName}=operator-session`) ? ['operator'] : ['admin'],
         scopes: ['tpl:admin'],
         expires_at: '2027-07-22T06:00:00.000Z',
       },

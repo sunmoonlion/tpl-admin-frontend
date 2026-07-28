@@ -5,6 +5,7 @@ const nextPort = Number(process.env.NEXT_PORT ?? 3008)
 const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL
 const baseURL = externalBaseURL ?? `http://127.0.0.1:${gatewayPort}`
 const pairBackendPort = Number(process.env.PAIR_FIXTURE_PORT ?? 18080)
+const reuseExistingServer = process.env.PLAYWRIGHT_REUSE_SERVER === '1'
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -25,7 +26,7 @@ export default defineConfig({
         {
           command: 'node scripts/admin-pair-fixture.mjs',
           url: `http://127.0.0.1:${pairBackendPort}/api/health`,
-          reuseExistingServer: !process.env.CI,
+          reuseExistingServer,
           timeout: 30_000,
           env: {
             PAIR_FIXTURE_PORT: String(pairBackendPort),
@@ -35,7 +36,7 @@ export default defineConfig({
         {
           command: 'pnpm prepare:standalone && node .next/standalone/server.js',
           url: `http://127.0.0.1:${nextPort}`,
-          reuseExistingServer: !process.env.CI,
+          reuseExistingServer,
           timeout: 60_000,
           env: {
             DEPLOYMENT_ENV: 'test',
@@ -50,7 +51,7 @@ export default defineConfig({
         {
           command: 'node scripts/pair-gateway.mjs',
           url: `${baseURL}/__gateway_health`,
-          reuseExistingServer: !process.env.CI,
+          reuseExistingServer,
           timeout: 30_000,
           env: {
             PAIR_GATEWAY_PORT: String(gatewayPort),

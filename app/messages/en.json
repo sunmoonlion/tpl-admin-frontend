@@ -47,7 +47,29 @@
     "home": "Home",
     "dashboard": "Governance console",
     "settings": "Settings",
+    "reference": "CRUD reference",
+    "richReference": "Rich capability reference",
+    "mainNavigation": "Administration navigation",
+    "breadcrumb": "Breadcrumb",
+    "openTabs": "Open pages",
+    "openMenu": "Open navigation",
+    "collapseMenu": "Collapse navigation",
+    "expandMenu": "Expand navigation",
+    "closeTab": "Close {name}",
     "governance": "Administration capability migration",
     "governanceDescription": "P0-007E will add navigation, authorization, CRUD, audit and shared tooling on this foundation."
+  },
+  "settings": {
+    "title": "Interface settings",
+    "close": "Close settings",
+    "theme": "Theme",
+    "theme_light": "Light",
+    "theme_dark": "Dark",
+    "theme_system": "System",
+    "density": "Density",
+    "density_comfortable": "Comfortable",
+    "density_compact": "Compact",
+    "language": "Language",
+    "fullscreen": "Toggle fullscreen"
   }
 }

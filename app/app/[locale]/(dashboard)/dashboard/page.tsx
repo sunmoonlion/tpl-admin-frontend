@@ -25,17 +25,8 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
   const tNav = await getTranslations('nav')
 
   return (
-    <div className="bg-background min-h-screen" data-route-class="authenticated-workspace">
-      <header className="flex items-center justify-between border-b px-6 py-3">
-        <span className="text-muted-foreground text-sm font-medium">{tNav('dashboard')}</span>
-        <LogoutButton
-          csrfToken={session.csrf_token}
-          locale={locale}
-          label={t('logout')}
-          errorLabel={t('logoutFailed')}
-        />
-      </header>
-      <main className="p-8">
+    <div data-route-class="authenticated-workspace">
+      <div className="admin-page-heading">
         <h1 className="text-2xl font-semibold tracking-tight">{tNav('dashboard')}</h1>
         <p className="text-muted-foreground mt-2">{t('dashboardWelcome')}</p>
         <p className="text-muted-foreground mt-1 text-sm">
@@ -43,11 +34,19 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
             name: session.user.display_name ?? session.user.email ?? session.user.actor_id,
           })}
         </p>
-        <section className="bg-card mt-8 rounded-xl border p-5 shadow-sm">
-          <h2 className="font-medium">{tNav('governance')}</h2>
-          <p className="text-muted-foreground mt-2 text-sm">{tNav('governanceDescription')}</p>
-        </section>
-      </main>
+      </div>
+      <section className="bg-card mt-8 rounded-xl border p-5 shadow-sm">
+        <h2 className="font-medium">{tNav('governance')}</h2>
+        <p className="text-muted-foreground mt-2 text-sm">{tNav('governanceDescription')}</p>
+      </section>
+      <div className="mt-6">
+        <LogoutButton
+          csrfToken={session.csrf_token}
+          locale={locale}
+          label={t('logout')}
+          errorLabel={t('logoutFailed')}
+        />
+      </div>
     </div>
   )
 }

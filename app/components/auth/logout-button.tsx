@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 type LogoutButtonProps = {
@@ -12,6 +13,7 @@ type LogoutButtonProps = {
 
 export function LogoutButton({ csrfToken, locale, label, errorLabel }: LogoutButtonProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const [pending, setPending] = useState(false)
   const [failed, setFailed] = useState(false)
 
@@ -29,6 +31,7 @@ export function LogoutButton({ csrfToken, locale, label, errorLabel }: LogoutBut
         },
       })
       if (!response.ok) throw new Error('logout_failed')
+      queryClient.clear()
       router.replace(`/${locale}/login`)
       router.refresh()
     } catch {

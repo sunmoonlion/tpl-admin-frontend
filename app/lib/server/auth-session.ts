@@ -31,3 +31,11 @@ export async function requireBrowserSession(locale: string) {
   if (!session) redirect(`/${locale}/login`)
   return session
 }
+
+export async function requireAnyRole(locale: string, roles: readonly string[]) {
+  const session = await requireBrowserSession(locale)
+  if (!roles.some((role) => session.user.roles.includes(role))) {
+    redirect(`/${locale}/forbidden`)
+  }
+  return session
+}

@@ -2,6 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
+import { ThemeController } from '@/components/admin/theme-controller'
+import { FeedbackProvider } from '@/components/crud/feedback'
 
 export function PlatformProviders({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -13,5 +15,10 @@ export function PlatformProviders({ children }: { children: React.ReactNode }) {
         },
       }),
   )
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeController />
+      <FeedbackProvider>{children}</FeedbackProvider>
+    </QueryClientProvider>
+  )
 }

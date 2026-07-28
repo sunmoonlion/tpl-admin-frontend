@@ -47,7 +47,29 @@
     "home": "首页",
     "dashboard": "治理控制台",
     "settings": "设置",
+    "reference": "CRUD 参考",
+    "richReference": "富能力参考",
+    "mainNavigation": "管理端导航",
+    "breadcrumb": "面包屑",
+    "openTabs": "已打开页面",
+    "openMenu": "打开导航",
+    "collapseMenu": "收起导航",
+    "expandMenu": "展开导航",
+    "closeTab": "关闭{name}",
     "governance": "管理能力迁移中枢",
     "governanceDescription": "P0-007E 将在此基础上逐项迁入菜单、权限、CRUD、审计和通用工具能力。"
+  },
+  "settings": {
+    "title": "界面设置",
+    "close": "关闭设置",
+    "theme": "主题",
+    "theme_light": "浅色",
+    "theme_dark": "深色",
+    "theme_system": "跟随系统",
+    "density": "密度",
+    "density_comfortable": "舒适",
+    "density_compact": "紧凑",
+    "language": "语言",
+    "fullscreen": "切换全屏"
   }
 }
