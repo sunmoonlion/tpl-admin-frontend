@@ -5,11 +5,11 @@ test('runtime health endpoint is dynamic and non-cacheable', async ({ request })
 
   expect(response.status()).toBe(200)
   expect(response.headers()['cache-control']).toContain('no-store')
-  expect(response.headers()['x-deployment-id']).toBe('p0-007e-e1-e2e')
+  expect(response.headers()['x-deployment-id']).toBe('arch-v2-r2-admin-e2e')
   expect(await response.json()).toEqual({
     status: 'ok',
     surface: 'admin',
-    deployment_id: 'p0-007e-e1-e2e',
+    deployment_id: 'arch-v2-r2-admin-e2e',
   })
 })
 

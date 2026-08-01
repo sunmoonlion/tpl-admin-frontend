@@ -1,6 +1,6 @@
 # tpl-admin-frontend
 
-SunmoonAI 的 Next.js Admin 通用模板。它与 FastAPI `tpl-admin-backend` 组成不可拆分的
+SunmoonAI 的 Next.js Admin 通用模板。它与 FastAPI `tpl-backend` 组成不可拆分的
 发布和验收单元，提供 App Router、public/authenticated 渲染边界、next-intl、
 Tailwind/shadcn UI、同源 `/api` 接入和 Node standalone 构建。
 
@@ -21,7 +21,7 @@ corepack pnpm dev
 
 首次使用时，从 `.env.example` 生成未提交的 `.env.local`。浏览器 API 固定为同源
 `/api`；`DEPLOYMENT_ENV`、`AUTH_APP`、`APP_ORIGIN`、
-`ADMIN_BACKEND_INTERNAL_URL`、`DEPLOYMENT_ID` 属于 server-only 运行时契约。
+`BACKEND_INTERNAL_URL`、`DEPLOYMENT_ID` 属于 server-only 运行时契约。
 Casdoor、Redis、服务 token 或其他凭据不得进入 `NEXT_PUBLIC_*` 或前端仓库。
 
 ## 质量门禁

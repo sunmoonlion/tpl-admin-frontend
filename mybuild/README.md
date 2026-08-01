@@ -36,7 +36,7 @@ cd /home/zymun/tpl-app/tpl-admin-frontend/mybuild
 - `DEPLOYMENT_ENV`
 - `AUTH_APP`
 - `APP_ORIGIN`
-- `ADMIN_BACKEND_INTERNAL_URL`
+- `BACKEND_INTERNAL_URL`
 - `DEPLOYMENT_ID`
 
 禁止把 Casdoor secret、Redis 凭据或服务 token 作为 `NEXT_PUBLIC_*` 或 Docker
